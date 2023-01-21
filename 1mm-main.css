@@ -74,7 +74,7 @@ span{
 }
 
 .content-box2{
-    background-color: red;
+    background-color: white;
     width: 100px;
     height: 100px;
     position: absolute;
@@ -120,6 +120,9 @@ span{
     background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
     box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6), inset -2px -2px 3px rgba(0, 0, 0, 0.6);
     align-self: center;
+    position: absolute;
+    top: 5px;
+    left: 5px;
 }
 .kick-button:hover {
     background-color:rgba(0, 220, 0, 1);
@@ -144,9 +147,17 @@ span{
 
 .nice-label{
     position: absolute;
-    top: 8px;
-    left: -30px;
     font-size: 5px;
     color: black;
     transition: all 0.25s ease;
-  }
+}
+
+.difficulty-pos{
+    top: 8px;
+    left: -35px;
+}
+
+.name-pos{
+    top: 30px;
+    left: -35px;
+}

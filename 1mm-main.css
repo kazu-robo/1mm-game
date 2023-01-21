@@ -35,6 +35,11 @@ span{
 
  */
 
+ body {
+    background-image: url("grass.jpg");
+    background-size: cover;
+  }
+  
  .flex{
     display: flex;    
  }
@@ -65,7 +70,7 @@ span{
 }
 
 .content-box1{
-    background-color: white;
+    /* background-color: white; */
     width: 100px;
     height: 50px;
     position: absolute;
@@ -74,7 +79,7 @@ span{
 }
 
 .content-box2{
-    background-color: white;
+    /* background-color: white; */
     width: 100px;
     height: 100px;
     position: absolute;
@@ -95,7 +100,7 @@ span{
     border: solid 2px green;
     background-color: green;
     width: 200px;
-    height: 200px;
+    height: 300px;
     margin: auto;
 }
 
@@ -107,7 +112,7 @@ span{
     margin: auto;
 }
 
-.kick-button {
+.push-button {
     border: 0;
     line-height: 2.5;
     padding: 0 20px;
@@ -124,12 +129,24 @@ span{
     top: 5px;
     left: 5px;
 }
-.kick-button:hover {
+.push-button:hover {
     background-color:rgba(0, 220, 0, 1);
 }
 
-.kick-button:active {
+.push-button:active {
     box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6), inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+.kick-button{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+.start-button{
+    position: absolute;
+    top: 5px;
+    left: 0px;
 }
 
 .nice-textbox{

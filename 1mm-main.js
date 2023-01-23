@@ -17,6 +17,9 @@ let ball = document.getElementById("ball");
 let difficulty = "0";
 let playerName = "";
 
+let randomCourse = 0;
+let curveLoop = 0;
+
 let ballPos = {
     x: 300,
     y: 0,
@@ -27,10 +30,7 @@ let ballPos = {
 /* button押下時に呼び出し */
 function kickButtonPushed(){
     if (isPlaying && !isKicked){
-        console.log("hoge");
         isKicked = true;
-        // ballShade.style.top = ball.style.top;
-        // ballShade.style.left = ball.style.left;
 
         ballShade.style.left = ballPos.x + "px";
         ballShade.style.top = ballPos.y + "px";
@@ -41,20 +41,98 @@ kickButton.addEventListener("click", kickButtonPushed);
 
 function ballAnimation(){
     if (!isKicked) {
-        ballPos.x -= 5;
-        ballPos.y += 5;
+        // パス軌道
+        if (difficulty === "1"){ // easy
+            ballPos.x -= 3;
+            ballPos.y += 3;
+        }
+        else if (difficulty === "2"){ //medium
+            if (tryNum < 4) {
+                ballPos.x -= 5;
+                ballPos.y += 5;
+            }
+            else if (tryNum === 4){
+                ballPos.x -= 7;
+                ballPos.y += 1;
+            }
+            else {
+                ballPos.x -= 6;
+                ballPos.y += 3;
+            }
+        }
+        else if (difficulty === "3"){ //difficult
+            if (tryNum < 4) {
+                ballPos.x -= 9;
+                ballPos.y += 9;
+            }
+            else if (tryNum === 4){
+                ballPos.x -= 10;
+                ballPos.y += 2;
+            }
+            else {
+                ballPos.x -= 8;
+                ballPos.y += 5;
+            }
+        }
+        else if (difficulty === "4"){ //super
+            if (randomCourse === 1) {
+                ballPos.x -= 9;
+                ballPos.y += 9;
+            }
+            else if (randomCourse === 2) {
+                ballPos.x -= 10;
+                ballPos.y += 2;
+            }
+            else if (randomCourse === 3) {
+                ballPos.x -= 8;
+                ballPos.y += 5;
+            }
+            else if (randomCourse === 4) {
+                ballPos.x -= 4;
+                ballPos.y += 2;
+            }
+            else if (randomCourse === 5) {
+                ballPos.x -= 9 - (curveLoop * 0.1);
+                ballPos.y += 5 + (curveLoop * 0.1);
+            }
+            else if (randomCourse === 6) {
+                ballPos.x -= 12 - (curveLoop * 0.18);
+                ballPos.y += 6 + (curveLoop * 0.18);
+            }
+            else if (randomCourse === 7) {
+                ballPos.x -= 9 + (curveLoop * 0.1);
+                ballPos.y += 9 - (curveLoop * 0.1);
+            }
+            else if (randomCourse === 8) {
+                ballPos.x -= 6 + (curveLoop * 0.18);
+                ballPos.y += 12 - (curveLoop * 0.18);
+            }
+            else {
+                console.log("[bug] random is not 1-8. random : " + random);
+            }
+            curveLoop++;
+        }
         ball.style.left = ballPos.x + "px";
         ball.style.top =  ballPos.y + "px";
+        
         // not kicked
-        if (ballPos.x < -100) {
+        if (ballPos.x < -100 || ballPos.y > 350) {
             isKicked = true;
             ballPos.x = 300;
             ballPos.y = 0;
+            ball.style.left = ballPos.x + "px";
+            ball.style.top =  ballPos.y + "px";
         }
     }
-    else if (ballPos.x < 300) {
-        ballPos.x += 5;
-        ballPos.y -= 5;
+    else if (ballPos.y > 0) { //after kicked
+        if (difficulty === "1" || difficulty === "2"){
+            ballPos.x += 3;
+            ballPos.y -= 8;
+        }
+        else if (difficulty === "3" || difficulty === "4"){
+            ballPos.x += 5;
+            ballPos.y -= 10;
+        }
         ball.style.left = ballPos.x + "px";
         ball.style.top =  ballPos.y + "px";
     }
@@ -66,6 +144,10 @@ function ballAnimation(){
             ballStarts();
         }
         else {
+            ballPos.x = 300;
+            ballPos.y = 0;
+            ball.style.left = ballPos.x + "px";
+            ball.style.top =  ballPos.y + "px";
             isPlaying = false;
         }
         return;
@@ -80,6 +162,8 @@ function ballStarts() {
     ballPos.y = 0;
     ball.style.left = ballPos.x + "px";
     ball.style.top =  ballPos.y + "px";
+    randomCourse = Math.floor(Math.random() * 8) + 1;
+    curveLoop = 0;
     requestAnimationFrame(ballAnimation);
     //ポップアップ
 

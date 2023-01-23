@@ -15,7 +15,7 @@ let ballShade = document.getElementById("ball-shade");
 let ball = document.getElementById("ball");
 
 let difficulty = "0";
-let name = "";
+let playerName = "";
 
 let ballPos = {
     x: 300,
@@ -26,14 +26,16 @@ let ballPos = {
 
 /* button押下時に呼び出し */
 function kickButtonPushed(){
-    console.log("hoge");
-    isKicked = true;
-    // ballShade.style.top = ball.style.top;
-    // ballShade.style.left = ball.style.left;
+    if (isPlaying && !isKicked){
+        console.log("hoge");
+        isKicked = true;
+        // ballShade.style.top = ball.style.top;
+        // ballShade.style.left = ball.style.left;
 
-    ballShade.style.left = ballPos.x + "px";
-    ballShade.style.top = ballPos.y + "px";
-    ballShade.style.visibility = "visible";
+        ballShade.style.left = ballPos.x + "px";
+        ballShade.style.top = ballPos.y + "px";
+        ballShade.style.visibility = "visible";
+    }
 }
 kickButton.addEventListener("click", kickButtonPushed);
 
@@ -43,6 +45,12 @@ function ballAnimation(){
         ballPos.y += 5;
         ball.style.left = ballPos.x + "px";
         ball.style.top =  ballPos.y + "px";
+        // not kicked
+        if (ballPos.x < -100) {
+            isKicked = true;
+            ballPos.x = 300;
+            ballPos.y = 0;
+        }
     }
     else if (ballPos.x < 300) {
         ballPos.x += 5;
@@ -56,6 +64,9 @@ function ballAnimation(){
         isKicked = false;
         if (tryNum < 5) {
             ballStarts();
+        }
+        else {
+            isPlaying = false;
         }
         return;
     }
@@ -83,13 +94,13 @@ function startButtonPushed(){
     tryNum = 0;
     isPlaying = true;
     difficulty = document.getElementById("difficulty").value;
-    name = document.getElementById("input-name").value;
+    playerName = document.getElementById("input-name").value;
+    
     // console.log(difficulty);
     // for (let i = 0; i < 5; i++) { // 5回分の施行
     ballStarts(); //async関数にしたりして while文で特定状況まで処理止めるとか
         
     // }
-    isPlaying = false;
 }
 startButton.addEventListener("click", startButtonPushed);
 

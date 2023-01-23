@@ -14,20 +14,23 @@
   <div class="title-box">
     <h3 class="text-centering">ギリギリ ライン上を目指せ！</h3>
   </div>
-  <div class="box-green-class">
-    <input type="number" id="input-number">
-    <input type="button" id="send-button" value="ワニ放出">
+  <div class="box-green-class relative">
+    <!-- <input type="number" id="input-number">
+    <input type="button" id="send-button" value="ワニ放出"> -->
+    <img src="white-line.png" id="line" alt="white-line">
+    <img src="ball.png" id="ball" class="ball-class" alt="ball">
+    <img src="ball-shade.png" id="ball-shade" class="ball-class" alt="ball-shade">
   </div>
-  <div class="box-blue-class"></div>
+  <!-- <div class="box-blue-class"></div> -->
 
   <div class="flex relative div-center">
     <div class="content-box1 relative">
-      <button class="push-button kick-button" type="button">
+      <button class="push-button kick-button" type="button" id="kick">
         KICK
       </button>
     </div>
     <div class="content-box2">
-      <select name="difficulty">
+      <select name="difficulty" id="difficulty">
       <option value="1">easy</option>
       <option value="2">medium</option>
       <option value="3">difficult</option>
@@ -37,13 +40,40 @@
       <input type="text" id="input-name" class="nice-textbox">
       <label class="nice-label name-pos" for="input-name">Name</label>
       <div class="relative">
-        <button class="push-button start-button" type="button">
+        <button class="push-button start-button" type="button" id="start">
           START
         </button>
       </div>
 
     </div>
-    <div class="content-box3">box3</div>
+    <div class="content-box3 relative">
+      <table border="1" class="table-class" width="100">
+        <tr>
+          <th width="50%">1回目</th>
+          <th width="50%" id="tab-1"></th>
+        </tr>
+        <tr>
+          <th>2回目</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>3回目</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>4回目</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>5回目</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>合計</th>
+          <th></th>
+        </tr>
+      </table>
+    </div>
   </div>
 
   <div class="title-box">

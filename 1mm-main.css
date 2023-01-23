@@ -88,7 +88,7 @@ span{
 }
 
 .content-box3{
-    background-color: red;
+    /* background-color: red; */
     width: 100px;
     height: 150px;
     position: absolute;
@@ -97,11 +97,37 @@ span{
 }
 
 .box-green-class{
-    border: solid 2px green;
-    background-color: green;
-    width: 200px;
+    /* border: solid 2px green; */
+    /* background-color: green; */
+    width: 300px;
     height: 300px;
     margin: auto;
+}
+
+.ball-class{
+    float: left;
+    width: 50px;
+    height: 50px;
+}
+
+#ball {
+    visibility: visible; /* 表示visible 非表示 hidden*/
+    position: absolute;
+    top: 0px;
+    left: 300px;
+}
+#ball-shade{
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#line{
+    width: 10px;
+    height: 350px;
+    position: absolute;
+    top: 0px;
+    left: 50px;
 }
 
 .box-blue-class{
@@ -125,9 +151,9 @@ span{
     background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
     box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6), inset -2px -2px 3px rgba(0, 0, 0, 0.6);
     align-self: center;
-    position: absolute;
+    /* position: absolute;
     top: 5px;
-    left: 5px;
+    left: 5px; */
 }
 .push-button:hover {
     background-color:rgba(0, 220, 0, 1);
@@ -146,7 +172,7 @@ span{
 .start-button{
     position: absolute;
     top: 5px;
-    left: 0px;
+    left: 3px;
 }
 
 .nice-textbox{
@@ -177,4 +203,11 @@ span{
 .name-pos{
     top: 30px;
     left: -35px;
+}
+
+.table-class{
+    font-size: 10px;
+    position: absolute;
+    top: 10px;
+    background-color: white;
 }

@@ -14,6 +14,7 @@ let scoreTotal = 0;
 
 let ballShade = document.getElementById("ball-shade");
 let ball = document.getElementById("ball");
+let impact = document.getElementById("impact");
 
 let difficulty = "0";
 let playerName = "";
@@ -33,6 +34,10 @@ function pxToMm(px){
     return mm;
 }
 
+function hideImpact(){
+    impact.style.visibility = "hidden";
+}
+
 // let blueBox = document.getElementsByClassName("box-blue-class")[0];
 
 /* button押下時に呼び出し */
@@ -44,6 +49,11 @@ function kickButtonPushed(){
         ballShade.style.left = kick_pos_x + "px";
         ballShade.style.top = ballPos.y + "px";
         ballShade.style.visibility = "visible";
+
+        impact.style.left = (kick_pos_x - 40) + "px";
+        impact.style.top = (ballPos.y + 20) + "px";
+        impact.style.visibility = "visible";
+        setTimeout(hideImpact, 100);
 
         scoreTotal += pxToMm(kick_pos_x - online_x);
 

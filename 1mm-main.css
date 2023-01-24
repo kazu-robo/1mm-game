@@ -129,6 +129,13 @@ span{
     top: 0px;
     left: 50px;
 }
+#impact{
+    height: 50px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    visibility: hidden;
+}
 
 .box-blue-class{
     border: solid 2px blue;

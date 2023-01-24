@@ -207,7 +207,7 @@ function ballAnimation(){
 }
 
 function ballStarts() {
-    console.log(tryNum);
+    // console.log(tryNum);
     tryNum++;
     ballPos.x = 300;
     ballPos.y = 0;

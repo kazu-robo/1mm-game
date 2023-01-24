@@ -10,6 +10,7 @@ let isPlaying = false;
 let isPoped = false;
 
 let tryNum = 0;
+let scoreTotal = 0;
 
 let ballShade = document.getElementById("ball-shade");
 let ball = document.getElementById("ball");
@@ -44,8 +45,15 @@ function kickButtonPushed(){
         ballShade.style.top = ballPos.y + "px";
         ballShade.style.visibility = "visible";
 
+        scoreTotal += pxToMm(kick_pos_x - online_x);
+
         // ちょい待ちからの
-        if (pxToMm(kick_pos_x - online_x) > 0){
+        if (kick_pos_x >= 3.7 && kick_pos_x <= 5){
+            document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = "1mm";
+            scoreTotal -= pxToMm(kick_pos_x - online_x);
+            scoreTotal += 1;
+        }
+        else if (pxToMm(kick_pos_x - online_x) > 0){
             if (pxToMm(kick_pos_x - online_x) < 10){
                 document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = Math.floor(pxToMm(kick_pos_x - online_x) * 10)/10 + "mm";
             }
@@ -53,13 +61,27 @@ function kickButtonPushed(){
                 document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = Math.floor(pxToMm(kick_pos_x - online_x))/10 + "cm";
             }
             else{
-                document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = Math.floor(pxToMm(kick_pos_x - online_x)/100)/10 + "m";
+                document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = Math.floor(pxToMm(kick_pos_x - online_x)/10)/100 + "m";
             }
         }
         else {
             document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = "Game Over";
+            document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = "Game Over";
+            tryNum = 6;
         }
         
+        // total
+        if (tryNum === 5) {
+            if (scoreTotal < 10){
+                document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = Math.floor(scoreTotal * 10)/10 + "mm";
+            }
+            else if (scoreTotal < 1000){
+                document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = Math.floor(scoreTotal)/10 + "cm";
+            }
+            else{
+                document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = Math.floor(scoreTotal/10)/100 + "m";
+            }
+        }
     }
 }
 kickButton.addEventListener("click", kickButtonPushed);
@@ -147,6 +169,10 @@ function ballAnimation(){
             ballPos.y = 0;
             ball.style.left = ballPos.x + "px";
             ball.style.top =  ballPos.y + "px";
+            
+            document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = "Game Over";
+            document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = "Game Over";
+            tryNum = 6;
         }
     }
     else if (ballPos.y > 0) { //after kicked
@@ -201,10 +227,11 @@ function startButtonPushed(){
         return;
     }
     tryNum = 0;
+    scoreTotal = 0;
     isPlaying = true;
     difficulty = document.getElementById("difficulty").value;
     playerName = document.getElementById("input-name").value;
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
         document.body.getElementsByClassName("table-class")[0].rows[i].cells[1].innerHTML = "";
     }
     

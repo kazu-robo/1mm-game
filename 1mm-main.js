@@ -24,6 +24,13 @@ let ballPos = {
     x: 300,
     y: 0,
 }
+const online_x = 4;
+
+function pxToMm(px){
+    let mm = px * 44 / 7;
+    mm = Math.floor(mm * 10) / 10;
+    return mm;
+}
 
 // let blueBox = document.getElementsByClassName("box-blue-class")[0];
 
@@ -32,9 +39,27 @@ function kickButtonPushed(){
     if (isPlaying && !isKicked){
         isKicked = true;
 
-        ballShade.style.left = ballPos.x + "px";
+        let kick_pos_x  = ballPos.x;
+        ballShade.style.left = kick_pos_x + "px";
         ballShade.style.top = ballPos.y + "px";
         ballShade.style.visibility = "visible";
+
+        // ちょい待ちからの
+        if (pxToMm(kick_pos_x - online_x) > 0){
+            if (pxToMm(kick_pos_x - online_x) < 10){
+                document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = Math.floor(pxToMm(kick_pos_x - online_x) * 10)/10 + "mm";
+            }
+            else if (pxToMm(kick_pos_x - online_x) < 1000){
+                document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = Math.floor(pxToMm(kick_pos_x - online_x))/10 + "cm";
+            }
+            else{
+                document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = Math.floor(pxToMm(kick_pos_x - online_x)/100)/10 + "m";
+            }
+        }
+        else {
+            document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = "Game Over";
+        }
+        
     }
 }
 kickButton.addEventListener("click", kickButtonPushed);
@@ -179,6 +204,9 @@ function startButtonPushed(){
     isPlaying = true;
     difficulty = document.getElementById("difficulty").value;
     playerName = document.getElementById("input-name").value;
+    for (let i = 0; i < 5; i++) {
+        document.body.getElementsByClassName("table-class")[0].rows[i].cells[1].innerHTML = "";
+    }
     
     // console.log(difficulty);
     // for (let i = 0; i < 5; i++) { // 5回分の施行
@@ -191,4 +219,3 @@ startButton.addEventListener("click", startButtonPushed);
 
 
 // tmp
-document.body.getElementsByClassName("table-class")[0].rows[0].cells[1].innerHTML = "hoge";

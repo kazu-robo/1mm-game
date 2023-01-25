@@ -8,6 +8,7 @@ let startButton = document.getElementById("start");
 let isKicked = false;
 let isPlaying = false;
 let isPoped = false;
+let isWaiting = false;
 
 let tryNum = 0;
 let scoreTotal = 0;
@@ -34,21 +35,21 @@ let ballPos = {
 }
 const online_x = 4;
 
-function pxToMm(px){
+function pxToMm(px) {
     let mm = px * 44 / 7;
     mm = Math.floor(mm * 10) / 10;
     return mm;
 }
 
-function hide(part){
+function hide(part) {
     part.style.visibility = "hidden";
 }
 
-function pop(part){
+function pop(part) {
     part.style.visibility = "visible";
 }
 
-function countDown(){
+function countDown() {
     pop(count3);
     setTimeout(hide.bind(null, count3), 1000);
     setTimeout(pop.bind(null, count2), 1001);
@@ -59,12 +60,32 @@ function countDown(){
 
 // let blueBox = document.getElementsByClassName("box-blue-class")[0];
 
+function total() {
+    // total
+    if (scoreTotal < 10) {
+        document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = Math.floor(scoreTotal * 10) / 10 + "mm";
+        printName.innerHTML = "合計スコア: " + Math.floor(scoreTotal * 10) / 10 + "mm ! ブラボー！！";
+        pop(printName);
+    }
+    else if (scoreTotal < 1000) {
+        document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = Math.floor(scoreTotal) / 10 + "cm";
+        printName.innerHTML = "合計スコア: " + Math.floor(scoreTotal) / 10 + "cm! まずまずプレーヤー！";
+        pop(printName);
+    }
+    else {
+        document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = Math.floor(scoreTotal / 10) / 100 + "m";
+        printName.innerHTML = "合計スコア: " + Math.floor(scoreTotal / 10) / 100 + "m... 練習して！"
+        pop(printName);
+    }
+
+}
+
 /* button押下時に呼び出し */
-function kickButtonPushed(){
-    if (isPlaying && !isKicked){
+function kickButtonPushed() {
+    if (isPlaying && !isKicked && !isWaiting) {
         isKicked = true;
 
-        let kick_pos_x  = ballPos.x;
+        let kick_pos_x = ballPos.x;
         ballShade.style.left = kick_pos_x + "px";
         ballShade.style.top = ballPos.y + "px";
         ballShade.style.visibility = "visible";
@@ -77,67 +98,78 @@ function kickButtonPushed(){
         scoreTotal += pxToMm(kick_pos_x - online_x);
 
         // ちょい待ちからの
-        if (kick_pos_x >= 3.7 && kick_pos_x <= 5){
-            document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = "1mm";
+        if (kick_pos_x >= 3.7 && kick_pos_x <= 5) {
+            document.body.getElementsByClassName("table-class")[0].rows[tryNum - 1].cells[1].innerHTML = "1mm";
             scoreTotal -= pxToMm(kick_pos_x - online_x);
             scoreTotal += 1;
+            printName.innerHTML = playerName + "の1mm" + "！";
+            pop(printName);
+            setTimeout(hide.bind(null, printName), 1000);
         }
-        else if (pxToMm(kick_pos_x - online_x) > 0){
-            if (pxToMm(kick_pos_x - online_x) < 10){
-                document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = Math.floor(pxToMm(kick_pos_x - online_x) * 10)/10 + "mm";
-                printName.innerHTML = playerName + "の" + Math.floor(pxToMm(kick_pos_x - online_x) * 10)/10 + "mm" + "！";
+        else if (pxToMm(kick_pos_x - online_x) > 0) {
+            if (pxToMm(kick_pos_x - online_x) < 10) {
+                document.body.getElementsByClassName("table-class")[0].rows[tryNum - 1].cells[1].innerHTML = Math.floor(pxToMm(kick_pos_x - online_x) * 10) / 10 + "mm";
+                printName.innerHTML = playerName + "の" + Math.floor(pxToMm(kick_pos_x - online_x) * 10) / 10 + "mm" + "！";
                 pop(printName);
                 setTimeout(hide.bind(null, printName), 1000);
             }
-            else if (pxToMm(kick_pos_x - online_x) < 1000){
-                document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = Math.floor(pxToMm(kick_pos_x - online_x))/10 + "cm";
-                printName.innerHTML = playerName + "の" + Math.floor(pxToMm(kick_pos_x - online_x))/10 + "cm"+ "！";
+            else if (pxToMm(kick_pos_x - online_x) < 1000) {
+                document.body.getElementsByClassName("table-class")[0].rows[tryNum - 1].cells[1].innerHTML = Math.floor(pxToMm(kick_pos_x - online_x)) / 10 + "cm";
+                printName.innerHTML = playerName + "の" + Math.floor(pxToMm(kick_pos_x - online_x)) / 10 + "cm" + "！";
                 pop(printName);
                 setTimeout(hide.bind(null, printName), 1000);
             }
-            else{
-                document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = Math.floor(pxToMm(kick_pos_x - online_x)/10)/100 + "m";
-                printName.innerHTML = playerName + "の" + Math.floor(pxToMm(kick_pos_x - online_x)/10)/100 + "m"+ "！";
+            else {
+                document.body.getElementsByClassName("table-class")[0].rows[tryNum - 1].cells[1].innerHTML = Math.floor(pxToMm(kick_pos_x - online_x) / 10) / 100 + "m";
+                printName.innerHTML = playerName + "の" + Math.floor(pxToMm(kick_pos_x - online_x) / 10) / 100 + "m" + "！";
                 pop(printName);
                 setTimeout(hide.bind(null, printName), 1000);
             }
         }
         else {
-            document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = "Game Over";
+            document.body.getElementsByClassName("table-class")[0].rows[tryNum - 1].cells[1].innerHTML = "Game Over";
             document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = "Game Over";
             pop(gameOver);
             tryNum = 6;
         }
-        
-        // total
         if (tryNum === 5) {
-            if (scoreTotal < 10){
-                document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = Math.floor(scoreTotal * 10)/10 + "mm";
-            }
-            else if (scoreTotal < 1000){
-                document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = Math.floor(scoreTotal)/10 + "cm";
-            }
-            else{
-                document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = Math.floor(scoreTotal/10)/100 + "m";
-            }
+            setTimeout(total, 1000);
         }
+        // // total
+        // if (tryNum === 5) {
+        //     if (scoreTotal < 10){
+        //         document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = Math.floor(scoreTotal * 10)/10 + "mm";
+        //         printName.innerHTML = "合計スコア: " + Math.floor(scoreTotal * 10)/10 + "mm ! ブラボー！！";
+        //         pop(printName);
+        //     }
+        //     else if (scoreTotal < 1000){
+        //         document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = Math.floor(scoreTotal)/10 + "cm";
+        //         printName.innerHTML = "合計スコア: " + Math.floor(scoreTotal)/10 + "cm! まずまずのプレーヤー！";
+        //         pop(printName);
+        //     }
+        //     else{
+        //         document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = Math.floor(scoreTotal/10)/100 + "m";
+        //         printName.innerHTML = "合計スコア: " + Math.floor(scoreTotal/10)/100 + "m... 練習して！"
+        //         pop(printName);
+        //     }
+        // }
     }
 }
 kickButton.addEventListener("click", kickButtonPushed);
 
-function ballAnimation(){
+function ballAnimation() {
     if (!isKicked) {
         // パス軌道
-        if (difficulty === "1"){ // easy
+        if (difficulty === "1") { // easy
             ballPos.x -= 3;
             ballPos.y += 3;
         }
-        else if (difficulty === "2"){ //medium
+        else if (difficulty === "2") { //medium
             if (tryNum < 4) {
                 ballPos.x -= 5;
                 ballPos.y += 5;
             }
-            else if (tryNum === 4){
+            else if (tryNum === 4) {
                 ballPos.x -= 7;
                 ballPos.y += 1;
             }
@@ -146,12 +178,12 @@ function ballAnimation(){
                 ballPos.y += 3;
             }
         }
-        else if (difficulty === "3"){ //difficult
+        else if (difficulty === "3") { //difficult
             if (tryNum < 4) {
                 ballPos.x -= 9;
                 ballPos.y += 9;
             }
-            else if (tryNum === 4){
+            else if (tryNum === 4) {
                 ballPos.x -= 10;
                 ballPos.y += 2;
             }
@@ -160,7 +192,7 @@ function ballAnimation(){
                 ballPos.y += 5;
             }
         }
-        else if (difficulty === "4"){ //super
+        else if (difficulty === "4") { //super
             if (randomCourse === 1) {
                 ballPos.x -= 9;
                 ballPos.y += 9;
@@ -199,33 +231,33 @@ function ballAnimation(){
             curveLoop++;
         }
         ball.style.left = ballPos.x + "px";
-        ball.style.top =  ballPos.y + "px";
-        
+        ball.style.top = ballPos.y + "px";
+
         // not kicked
         if (ballPos.x < -100 || ballPos.y > 350) {
             isKicked = true;
             ballPos.x = 300;
             ballPos.y = 0;
             ball.style.left = ballPos.x + "px";
-            ball.style.top =  ballPos.y + "px";
-            
-            document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = "Game Over";
+            ball.style.top = ballPos.y + "px";
+
+            document.body.getElementsByClassName("table-class")[0].rows[tryNum - 1].cells[1].innerHTML = "Game Over";
             document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = "Game Over";
             pop(gameOver);
             tryNum = 6;
         }
     }
     else if (ballPos.y > 0) { //after kicked
-        if (difficulty === "1" || difficulty === "2"){
+        if (difficulty === "1" || difficulty === "2") {
             ballPos.x += 3;
             ballPos.y -= 8;
         }
-        else if (difficulty === "3" || difficulty === "4"){
+        else if (difficulty === "3" || difficulty === "4") {
             ballPos.x += 5;
             ballPos.y -= 10;
         }
         ball.style.left = ballPos.x + "px";
-        ball.style.top =  ballPos.y + "px";
+        ball.style.top = ballPos.y + "px";
     }
     else {
         ballShade.style.visibility = "hidden";
@@ -238,7 +270,7 @@ function ballAnimation(){
             ballPos.x = 300;
             ballPos.y = 0;
             ball.style.left = ballPos.x + "px";
-            ball.style.top =  ballPos.y + "px";
+            ball.style.top = ballPos.y + "px";
             isPlaying = false;
         }
         return;
@@ -252,7 +284,7 @@ function ballStarts() {
     ballPos.x = 300;
     ballPos.y = 0;
     ball.style.left = ballPos.x + "px";
-    ball.style.top =  ballPos.y + "px";
+    ball.style.top = ballPos.y + "px";
     randomCourse = Math.floor(Math.random() * 8) + 1;
     curveLoop = 0;
     requestAnimationFrame(ballAnimation);
@@ -260,15 +292,21 @@ function ballStarts() {
 
 }
 
+function notWaiting() {
+    isWaiting = false;
+}
+
 /* button押下時に呼び出し */
-function startButtonPushed(){
+function startButtonPushed() {
     /* ここでnum数を更新 */
     if (isPlaying) {
         return;
     }
+    isWaiting = true;
     tryNum = 0;
     scoreTotal = 0;
     hide(gameOver);
+    hide(printName);
     isPlaying = true;
     difficulty = document.getElementById("difficulty").value;
     playerName = document.getElementById("input-name").value;
@@ -276,11 +314,12 @@ function startButtonPushed(){
         document.body.getElementsByClassName("table-class")[0].rows[i].cells[1].innerHTML = "";
     }
     countDown();
+    setTimeout(notWaiting, 3000);
     // console.log(difficulty);
     // for (let i = 0; i < 5; i++) { // 5回分の施行
     setTimeout(ballStarts, 3001);
     // ballStarts(); //async関数にしたりして while文で特定状況まで処理止めるとか
-        
+
     // }
 }
 startButton.addEventListener("click", startButtonPushed);

@@ -87,6 +87,37 @@ span{
     left: 100px;
 }
 
+.char-output{
+    float: none;
+    width: 200px;
+    height: 70px;
+    position: absolute;
+    left: 70px;
+    top: 150px;
+    /* background-color: blue; */
+}
+#count3{
+    position: absolute;
+    left: 80px;
+    top: 0px;
+}
+#count2{
+    position: absolute;
+    left: 80px;
+    top: 0px;
+}
+#count1{
+    position: absolute;
+    left: 80px;
+    top: 0px;
+}
+
+.count-down{
+    font-size: 20px;
+    color: white;
+    visibility: hidden;
+}
+
 .content-box3{
     /* background-color: red; */
     width: 100px;

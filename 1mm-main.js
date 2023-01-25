@@ -16,6 +16,10 @@ let ballShade = document.getElementById("ball-shade");
 let ball = document.getElementById("ball");
 let impact = document.getElementById("impact");
 
+let count3 = document.getElementById("count3");
+let count2 = document.getElementById("count2");
+let count1 = document.getElementById("count1");
+
 let difficulty = "0";
 let playerName = "";
 
@@ -34,8 +38,21 @@ function pxToMm(px){
     return mm;
 }
 
-function hideImpact(){
-    impact.style.visibility = "hidden";
+function hide(part){
+    part.style.visibility = "hidden";
+}
+
+function pop(part){
+    part.style.visibility = "visible";
+}
+
+function countDown(){
+    pop(count3);
+    setTimeout(hide.bind(null, count3), 1000);
+    setTimeout(pop.bind(null, count2), 1001);
+    setTimeout(hide.bind(null, count2), 2000);
+    setTimeout(pop.bind(null, count1), 2001);
+    setTimeout(hide.bind(null, count1), 3000);
 }
 
 // let blueBox = document.getElementsByClassName("box-blue-class")[0];
@@ -53,7 +70,7 @@ function kickButtonPushed(){
         impact.style.left = (kick_pos_x - 40) + "px";
         impact.style.top = (ballPos.y + 20) + "px";
         impact.style.visibility = "visible";
-        setTimeout(hideImpact, 100);
+        setTimeout(hide.bind(null, impact), 100);
 
         scoreTotal += pxToMm(kick_pos_x - online_x);
 
@@ -244,10 +261,11 @@ function startButtonPushed(){
     for (let i = 0; i < 6; i++) {
         document.body.getElementsByClassName("table-class")[0].rows[i].cells[1].innerHTML = "";
     }
-    
+    countDown();
     // console.log(difficulty);
     // for (let i = 0; i < 5; i++) { // 5回分の施行
-    ballStarts(); //async関数にしたりして while文で特定状況まで処理止めるとか
+    setTimeout(ballStarts, 3001);
+    // ballStarts(); //async関数にしたりして while文で特定状況まで処理止めるとか
         
     // }
 }

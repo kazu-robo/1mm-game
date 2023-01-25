@@ -113,9 +113,12 @@ span{
 }
 
 .count-down{
-    font-size: 20px;
+    font-size: 40px;
     color: white;
     visibility: hidden;
+    line-height:0.95em;
+	font-weight:bold;
+	text-shadow: 0.02em 0.02em 0.02em rgba(0,0,0,1);
 }
 
 .content-box3{

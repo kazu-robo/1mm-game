@@ -64,17 +64,17 @@ function total() {
     // total
     if (scoreTotal < 10) {
         document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = Math.floor(scoreTotal * 10) / 10 + "mm";
-        printName.innerHTML = "合計スコア: " + Math.floor(scoreTotal * 10) / 10 + "mm ! ブラボー！！";
+        printName.innerHTML = "合計スコア: " + Math.floor(scoreTotal * 10) / 10 + "mm!<br>ブラボー！！";
         pop(printName);
     }
     else if (scoreTotal < 1000) {
         document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = Math.floor(scoreTotal) / 10 + "cm";
-        printName.innerHTML = "合計スコア: " + Math.floor(scoreTotal) / 10 + "cm! まずまずプレーヤー！";
+        printName.innerHTML = "合計スコア: " + Math.floor(scoreTotal) / 10 + "cm!<br>まずまずプレーヤー！";
         pop(printName);
     }
     else {
         document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = Math.floor(scoreTotal / 10) / 100 + "m";
-        printName.innerHTML = "合計スコア: " + Math.floor(scoreTotal / 10) / 100 + "m... 練習して！"
+        printName.innerHTML = "合計スコア: " + Math.floor(scoreTotal / 10) / 100 + "m...<br>練習して！"
         pop(printName);
     }
 

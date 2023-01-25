@@ -121,6 +121,31 @@ span{
 	text-shadow: 0.02em 0.02em 0.02em rgba(0,0,0,1);
 }
 
+#game-over{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    font-size: 50px;
+    color: red;
+    visibility: hidden;
+    line-height:0.95em;
+	font-weight:bold;
+	text-shadow: 0.02em 0.02em 0.02em white;
+}
+
+#print-name{
+    position: absolute;
+    left: -50px;
+    top: 0px;
+    width: 300px;
+    font-size: 30px;
+    color: white;
+    visibility: hidden;
+    line-height:0.95em;
+	font-weight:bold;
+	text-shadow: 0.02em 0.02em 0.02em rgba(0,0,0,1);
+}
+
 .content-box3{
     /* background-color: red; */
     width: 100px;

@@ -15,6 +15,8 @@ let scoreTotal = 0;
 let ballShade = document.getElementById("ball-shade");
 let ball = document.getElementById("ball");
 let impact = document.getElementById("impact");
+let gameOver = document.getElementById("game-over");
+let printName = document.getElementById("print-name");
 
 let count3 = document.getElementById("count3");
 let count2 = document.getElementById("count2");
@@ -83,17 +85,27 @@ function kickButtonPushed(){
         else if (pxToMm(kick_pos_x - online_x) > 0){
             if (pxToMm(kick_pos_x - online_x) < 10){
                 document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = Math.floor(pxToMm(kick_pos_x - online_x) * 10)/10 + "mm";
+                printName.innerHTML = playerName + "の" + Math.floor(pxToMm(kick_pos_x - online_x) * 10)/10 + "mm" + "！";
+                pop(printName);
+                setTimeout(hide.bind(null, printName), 1000);
             }
             else if (pxToMm(kick_pos_x - online_x) < 1000){
                 document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = Math.floor(pxToMm(kick_pos_x - online_x))/10 + "cm";
+                printName.innerHTML = playerName + "の" + Math.floor(pxToMm(kick_pos_x - online_x))/10 + "cm"+ "！";
+                pop(printName);
+                setTimeout(hide.bind(null, printName), 1000);
             }
             else{
                 document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = Math.floor(pxToMm(kick_pos_x - online_x)/10)/100 + "m";
+                printName.innerHTML = playerName + "の" + Math.floor(pxToMm(kick_pos_x - online_x)/10)/100 + "m"+ "！";
+                pop(printName);
+                setTimeout(hide.bind(null, printName), 1000);
             }
         }
         else {
             document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = "Game Over";
             document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = "Game Over";
+            pop(gameOver);
             tryNum = 6;
         }
         
@@ -199,6 +211,7 @@ function ballAnimation(){
             
             document.body.getElementsByClassName("table-class")[0].rows[tryNum-1].cells[1].innerHTML = "Game Over";
             document.body.getElementsByClassName("table-class")[0].rows[5].cells[1].innerHTML = "Game Over";
+            pop(gameOver);
             tryNum = 6;
         }
     }
@@ -255,6 +268,7 @@ function startButtonPushed(){
     }
     tryNum = 0;
     scoreTotal = 0;
+    hide(gameOver);
     isPlaying = true;
     difficulty = document.getElementById("difficulty").value;
     playerName = document.getElementById("input-name").value;

@@ -28,6 +28,7 @@ let playerName = "";
 
 let randomCourse = 0;
 let curveLoop = 0;
+let x_speed = 0;
 
 let ballPos = {
     x: 300,
@@ -98,7 +99,8 @@ function kickButtonPushed() {
         scoreTotal += pxToMm(kick_pos_x - online_x);
 
         // ちょい待ちからの
-        if (kick_pos_x >= 3.7 && kick_pos_x <= 5) {
+        // if (kick_pos_x >= 3.7 && kick_pos_x <= 5) {
+        if (kick_pos_x - online_x >= 0 && kick_pos_x - online_x <= x_speed) {
             document.body.getElementsByClassName("table-class")[0].rows[tryNum - 1].cells[1].innerHTML = "1mm";
             scoreTotal -= pxToMm(kick_pos_x - online_x);
             scoreTotal += 1;
@@ -163,67 +165,82 @@ function ballAnimation() {
         if (difficulty === "1") { // easy
             ballPos.x -= 3;
             ballPos.y += 3;
+            x_speed = 3;
         }
         else if (difficulty === "2") { //medium
             if (tryNum < 4) {
                 ballPos.x -= 5;
                 ballPos.y += 5;
+                x_speed = 5;
             }
             else if (tryNum === 4) {
                 ballPos.x -= 7;
                 ballPos.y += 1;
+                x_speed = 7;
             }
             else {
                 ballPos.x -= 6;
                 ballPos.y += 3;
+                x_speed = 6;
             }
         }
         else if (difficulty === "3") { //difficult
             if (tryNum < 4) {
                 ballPos.x -= 9;
                 ballPos.y += 9;
+                x_speed = 9;
             }
             else if (tryNum === 4) {
                 ballPos.x -= 10;
                 ballPos.y += 2;
+                x_speed = 10;
             }
             else {
                 ballPos.x -= 8;
                 ballPos.y += 5;
+                x_speed = 8;
             }
         }
         else if (difficulty === "4") { //super
             if (randomCourse === 1) {
                 ballPos.x -= 9;
                 ballPos.y += 9;
+                x_speed = 9;
             }
             else if (randomCourse === 2) {
                 ballPos.x -= 10;
                 ballPos.y += 2;
+                x_speed = 10;
             }
             else if (randomCourse === 3) {
                 ballPos.x -= 8;
                 ballPos.y += 5;
+                x_speed = 8;
             }
             else if (randomCourse === 4) {
                 ballPos.x -= 4;
                 ballPos.y += 2;
+                x_speed = 4;
             }
             else if (randomCourse === 5) {
                 ballPos.x -= 9 - (curveLoop * 0.1);
                 ballPos.y += 5 + (curveLoop * 0.1);
+                x_speed = 9 - ((curveLoop + 1) * 0.1);
             }
             else if (randomCourse === 6) {
                 ballPos.x -= 12 - (curveLoop * 0.18);
                 ballPos.y += 6 + (curveLoop * 0.18);
+                x_speed = 12 - ((curveLoop + 1) * 0.18);
             }
             else if (randomCourse === 7) {
                 ballPos.x -= 9 + (curveLoop * 0.1);
                 ballPos.y += 9 - (curveLoop * 0.1);
+                x_speed = 9 + ((curveLoop + 1) * 0.1);
             }
             else if (randomCourse === 8) {
                 ballPos.x -= 6 + (curveLoop * 0.18);
                 ballPos.y += 12 - (curveLoop * 0.18);
+                x_speed = 6 + ((curveLoop + 1) * 0.18);
             }
             else {
                 console.log("[bug] random is not 1-8. random : " + random);
@@ -232,6 +249,7 @@ function ballAnimation() {
         }
         ball.style.left = ballPos.x + "px";
         ball.style.top = ballPos.y + "px";
+        // console.log(pxToMm(ballPos.x - online_x));
 
         // not kicked
         if (ballPos.x < -100 || ballPos.y > 350) {
